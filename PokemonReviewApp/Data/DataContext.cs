@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PokemonReviewApp.Models;
+
 
 namespace PokemonReviewApp.Data
 {
@@ -20,7 +23,7 @@ namespace PokemonReviewApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-             modelBuilder.Entity<PokemonCategory>()
+            modelBuilder.Entity<PokemonCategory>()
                 .HasKey(pc => new {pc.PokemonId, pc.CategoryId});
             modelBuilder.Entity<PokemonCategory>()
                 .HasOne(p => p.Pokemon)
@@ -40,6 +43,7 @@ namespace PokemonReviewApp.Data
                 .HasOne(p => p.Owner)
                 .WithMany(pc => pc.PokemonOwners)
                 .HasForeignKey(c => c.OwnerId);
+            
         }
     }
 }
