@@ -15,7 +15,7 @@ namespace PokemonReviewApp.Controllers
         private readonly IReviewerRepository _reviewerRepository;
         private readonly IPokemonRepository _pokemonRepository;
 
-        public ReviewController(IReviewRepository reviewRepository,
+        public ReviewController(IReviewRepository reviewRepository, 
             IMapper mapper,
             IPokemonRepository pokemonRepository,
             IReviewerRepository reviewerRepository)
@@ -70,7 +70,7 @@ namespace PokemonReviewApp.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateReview([FromQuery] int reviewerId, [FromQuery] int pokeId, [FromBody] ReviewDto reviewCreate)
+        public IActionResult CreateReview([FromQuery] int reviewerId, [FromQuery]int pokeId, [FromBody] ReviewDto reviewCreate)
         {
             if (reviewCreate == null)
                 return BadRequest(ModelState);
@@ -92,7 +92,7 @@ namespace PokemonReviewApp.Controllers
 
             reviewMap.Pokemon = _pokemonRepository.GetPokemon(pokeId);
             reviewMap.Reviewer = _reviewerRepository.GetReviewer(reviewerId);
-
+            
 
             if (!_reviewRepository.CreateReview(reviewMap))
             {
@@ -155,28 +155,28 @@ namespace PokemonReviewApp.Controllers
 
             return NoContent();
         }
-
+        
         // Added missing delete range of reviews by a reviewer **>CK
         [HttpDelete("/DeleteReviewsByReviewer/{reviewerId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteReviewsByReviewer(int reviewerId)
+    public IActionResult DeleteReviewsByReviewer(int reviewerId)
+    {
+        if (!_reviewerRepository.ReviewerExists(reviewerId))
+            return NotFound();
+
+        var reviewsToDelete = _reviewerRepository.GetReviewsByReviewer(reviewerId).ToList();
+        if (!ModelState.IsValid)
+            return BadRequest();
+
+        if (!_reviewRepository.DeleteReviews(reviewsToDelete))
         {
-            if (!_reviewerRepository.ReviewerExists(reviewerId))
-                return NotFound();
-
-            var reviewsToDelete = _reviewerRepository.GetReviewsByReviewer(reviewerId).ToList();
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            if (!_reviewRepository.DeleteReviews(reviewsToDelete))
-            {
-                ModelState.AddModelError("", "error deleting reviews");
-                return StatusCode(500, ModelState);
-            }
-            return NoContent();
+            ModelState.AddModelError("", "error deleting reviews");
+            return StatusCode(500, ModelState);
         }
+        return NoContent();
+    }
 
     }
 }

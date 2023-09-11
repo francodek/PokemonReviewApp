@@ -12,7 +12,7 @@ using PokemonReviewApp.Data;
 namespace PokemonReviewApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230830144412_InitialCreate")]
+    [Migration("20220105001046_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace PokemonReviewApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("countries");
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("PokemonReviewApp.Models.Owner", b =>
@@ -120,7 +120,7 @@ namespace PokemonReviewApp.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("pokemonCategories");
+                    b.ToTable("PokemonCategories");
                 });
 
             modelBuilder.Entity("PokemonReviewApp.Models.PokemonOwner", b =>

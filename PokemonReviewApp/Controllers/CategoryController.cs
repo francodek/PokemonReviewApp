@@ -73,7 +73,7 @@ namespace PokemonReviewApp.Controllers
                 .Where(c => c.Name.Trim().ToUpper() == categoryCreate.Name.TrimEnd().ToUpper())
                 .FirstOrDefault();
 
-            if (category != null)
+            if(category != null)
             {
                 ModelState.AddModelError("", "Category already exists");
                 return StatusCode(422, ModelState);
@@ -84,7 +84,7 @@ namespace PokemonReviewApp.Controllers
 
             var categoryMap = _mapper.Map<Category>(categoryCreate);
 
-            if (!_categoryRepository.CreateCategory(categoryMap))
+            if(!_categoryRepository.CreateCategory(categoryMap))
             {
                 ModelState.AddModelError("", "Something went wrong while savin");
                 return StatusCode(500, ModelState);
@@ -97,7 +97,7 @@ namespace PokemonReviewApp.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateCategory(int categoryId, [FromBody] CategoryDto updatedCategory)
+        public IActionResult UpdateCategory(int categoryId, [FromBody]CategoryDto updatedCategory)
         {
             if (updatedCategory == null)
                 return BadRequest(ModelState);
@@ -113,7 +113,7 @@ namespace PokemonReviewApp.Controllers
 
             var categoryMap = _mapper.Map<Category>(updatedCategory);
 
-            if (!_categoryRepository.UpdateCategory(categoryMap))
+            if(!_categoryRepository.UpdateCategory(categoryMap))
             {
                 ModelState.AddModelError("", "Something went wrong updating category");
                 return StatusCode(500, ModelState);
@@ -128,7 +128,7 @@ namespace PokemonReviewApp.Controllers
         [ProducesResponseType(404)]
         public IActionResult DeleteCategory(int categoryId)
         {
-            if (!_categoryRepository.CategoryExists(categoryId))
+            if(!_categoryRepository.CategoryExists(categoryId))
             {
                 return NotFound();
             }
@@ -138,7 +138,7 @@ namespace PokemonReviewApp.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (!_categoryRepository.DeleteCategory(categoryToDelete))
+            if(!_categoryRepository.DeleteCategory(categoryToDelete))
             {
                 ModelState.AddModelError("", "Something went wrong deleting category");
             }

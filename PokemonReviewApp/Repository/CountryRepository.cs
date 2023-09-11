@@ -17,7 +17,7 @@ namespace PokemonReviewApp.Repository
         }
         public bool CountryExists(int id)
         {
-            return _context.countries.Any(c => c.Id == id);
+            return _context.Countries.Any(c => c.Id == id);
         }
 
         public bool CreateCountry(Country country)
@@ -34,12 +34,12 @@ namespace PokemonReviewApp.Repository
 
         public ICollection<Country> GetCountries()
         {
-            return _context.countries.ToList();
+            return _context.Countries.ToList();
         }
 
         public Country GetCountry(int id)
         {
-            return _context.countries.Where(c => c.Id == id).FirstOrDefault();
+            return _context.Countries.Where(c => c.Id == id).FirstOrDefault();
         }
 
         public Country GetCountryByOwner(int ownerId)

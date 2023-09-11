@@ -53,7 +53,7 @@ namespace PokemonReviewApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("countries");
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("PokemonReviewApp.Models.Owner", b =>
@@ -118,7 +118,7 @@ namespace PokemonReviewApp.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("pokemonCategories");
+                    b.ToTable("PokemonCategories");
                 });
 
             modelBuilder.Entity("PokemonReviewApp.Models.PokemonOwner", b =>

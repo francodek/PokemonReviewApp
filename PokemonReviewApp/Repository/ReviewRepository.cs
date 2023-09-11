@@ -24,7 +24,7 @@ namespace PokemonReviewApp.Repository
 
         public bool DeleteReview(Review review)
         {
-            _context.Remove(review);
+           _context.Remove(review);
             return Save();
         }
 
